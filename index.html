@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SynergyLearn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="logo">SL</div>
+        <div>
+          <h1>SynergyLearn</h1>
+          <p>Study Hub for Students</p>
+        </div>
+      </div>
+      <nav class="app-nav">
+        <div id="currentRoleChip" class="role-chip" style="display:none"></div>
+        <div id="userChip" class="pill" style="display:none"></div>
+      </nav>
+    </header>
+
+    <!-- ROLE SELECTION PAGE -->
+    <section id="rolePage" class="card">
+      <h2>Choose Your Role</h2>
+      <p class="muted">Select your role to proceed.</p>
+      <div class="role-grid">
+          <div class="role-btn" id="studentRole">
+          <div class="role-icon student">🎓</div>
+          <div class="role-title">Student</div>
+          <div class="role-desc">Access AI tools, join groups, get tutoring</div>
+          </div>
+          <div class="role-btn" id="professorRole">
+          <div class="role-icon professor">👨‍🏫</div>
+          <div class="role-title">Professor</div>
+          <div class="role-desc">Tutor students & assist in learning</div>
+          </div>
+      </div>
+    </section>
+
+    <!-- SIGNUP PAGE -->
+    <section id="signupPage" class="card page-hidden">
+      <h2>Create Account</h2>
+      <form onsubmit="createAccount(event)">
+        <label>Username</label>
+        <input type="text" id="newUser" required>
+        <label>Password</label>
+        <input type="password" id="newPass" required>
+        <br><br>
+        <button class="btn-primary" type="submit">Create Account</button>
+      </form>
+      <p class="muted">
+        Already have an account? <span class="link" onclick="showLogin()">Login</span>
+      </p>
+      <button class="btn-ghost" onclick="backToRoleSelection()">Back</button>
+    </section>
+
+    <!-- LOGIN PAGE -->
+    <section id="loginPage" class="card page-hidden">
+      <h2>Login</h2>
+      <form onsubmit="loginUser(event)">
+        <label>Username</label>
+        <input type="text" id="loginUser" required>
+        <label>Password</label>
+        <input type="password" id="loginPass" required>
+        <button class="btn-primary" type="submit">Login</button>
+      </form>
+      <p class="muted">
+        Don't have an account? <span class="link" onclick="showSignup()">Create Account</span>
+      </p>
+      <button class="btn-ghost" onclick="backToRoleSelection()">Back</button>
+    </section>
+
+    <!-- HOME DASHBOARD -->
+    <section id="home" class="card page-hidden">
+      <h2>Home</h2>
+      <div class="grid-3">
+        <div class="feature-card" onclick="showPage('aiChecker')">AI Checker</div>
+        <div class="feature-card" onclick="showPage('group')">Study Groups</div>
+        <div class="feature-card" id="meetingFeatureCard" onclick="showPage('meetings')">Meetings</div>
+      </div>
+      <button class="btn-ghost" onclick="logout()">Logout</button>
+    </section>
+
+    <!-- AI CHECKER -->
+    <section id="aiChecker" class="card page-hidden">
+      <h2>AI Practice Exam Generator</h2>
+      <label>Enter Topic / Reviewer</label>
+      <input type="text" id="reviewTopic" placeholder="e.g., Photosynthesis, WW2, Algebra">
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button class="btn-primary" onclick="generateQuestions({source:'topic',count:15})">Generate 15 MCQs</button>
+        <button class="btn-ghost" onclick="clearGenerated()">Clear</button>
+      </div>
+      <div class="file-input">
+        <input type="file" id="pdfFile" accept="application/pdf">
+        <button class="btn-primary" onclick="importPdfAndGenerate()">Import PDF & Generate</button>
+      </div>
+      <div id="questionOutput" class="output-box" style="display:none;"></div>
+      <div style="margin-top:10px; display:flex; gap:8px;">
+        <button class="btn-primary" onclick="submitExam()">Submit Exam</button>
+        <button class="btn-primary" onclick="downloadExam()">Download Exam</button>
+        <button class="btn-ghost" onclick="showPage('home')">Back</button>
+      </div>
+      <div id="scoreBox" class="score-box" style="display:none"></div>
+    </section>
+
+    <!-- GROUPS PAGE -->
+    <section id="group" class="card page-hidden">
+      <h2>Group Study</h2>
+      <button class="btn-primary" onclick="openCreateGroup()">Create Circle</button>
+      <div class="list" id="groupList"></div>
+      <button class="btn-ghost" onclick="showPage('home')">Back</button>
+    </section>
+
+    <!-- MEETINGS PAGE -->
+    <section id="meetings" class="card page-hidden">
+      <h2>One-on-One Meetings</h2>
+      <div id="meetingContainer"></div>
+      <button class="btn-ghost" onclick="showPage('home')">Back</button>
+    </section>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
